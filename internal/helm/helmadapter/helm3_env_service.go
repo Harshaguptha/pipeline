@@ -382,14 +382,14 @@ func (h helm3EnvService) listCharts(_ context.Context, helmEnv helm.HelmEnv, fil
 					continue
 				}
 
-				switch filter.VersionFilter() {
+				switch filter.StrictVersionFilter() {
 				case "all":
 					// special case: collect all versions for the chart Backwards compatibility!
 					filteredChartVersions = append(filteredChartVersions, chartVersion)
 				default:
-					if !matchesFilter(filter.VersionFilter(), chartVersion.Version) {
+					if !matchesFilter(filter.StrictVersionFilter(), chartVersion.Version) {
 						h.logger.Debug("chart version doesn't match the filter, skipping the version",
-							map[string]interface{}{"filter": filter.VersionFilter(), "version": chartVersion.Version})
+							map[string]interface{}{"filter": filter.StrictVersionFilter(), "version": chartVersion.Version})
 						// skip further processing
 						continue
 					}
